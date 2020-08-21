@@ -34,7 +34,8 @@ const router = new VueRouter({
       path: "/profile",
       component: Profile
     }
-  ]
+  ],
+  mode: 'history'
 })
 
 export default router
