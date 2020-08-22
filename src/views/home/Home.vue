@@ -3,8 +3,9 @@
     <nav-bar>
       <span slot="middle">购物街</span>
     </nav-bar>
-    <rotation :img-list="banners"></rotation>
-    <recommends :recommends="recommends"></recommends>
+    <rotation :img-list="banners"/>
+    <recommends :recommends="recommends"/>
+    <feature-view/>
   </div>
 </template>
 
@@ -13,6 +14,7 @@
   import {getHomeMultidata} from "network/home";
   import Rotation from "components/common/rotation/Rotation";
   import Recommends from "./Recommends";
+  import FeatureView from "./FeatureView";
 
   export default {
     name: "Home",
@@ -25,7 +27,8 @@
     components: {
       NavBar,
       Rotation,
-      Recommends
+      Recommends,
+      FeatureView
     },
     created() {
       getHomeMultidata().then(res => {
