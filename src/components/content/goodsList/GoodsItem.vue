@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="itemInfo.show.img">
+    <img :src="itemInfo.show.img" @load="imgLoad">
     <div class="disc">
       <div class="title">{{itemInfo.title}}</div>
       <span class="price">{{itemInfo.price}}</span>
@@ -19,6 +19,11 @@
           return {};
         }
       }
+    },
+    methods: {
+      imgLoad(){
+        this.$bus.$emit('goodsImgLoad');
+      }
     }
   }
 </script>
@@ -28,6 +33,7 @@
     width: 48%;
     font-size: 14px;
     text-align: center;
+    margin-bottom: 3px;
   }
   .goods-item img{
     width: 100%;

@@ -1,7 +1,7 @@
 <template>
   <div class="rotation">
     <div class="img-list" :style="{marginLeft: leftPosition}">
-      <img v-for="item in imgList" :src="item.image">
+      <img v-for="item in imgList" :src="item.image" @load="imgLoad">
       <img :src="imgList[0] && imgList[0].image">
     </div>
     <div class="pointer-wrapper">
@@ -84,6 +84,9 @@
         this.leftPosition = -index * document.body.clientWidth + 'px';
         this.currentIndex = index;
         this.rotate();
+      },
+      imgLoad(){
+        this.$emit('rotationImgLoad');
       }
     }
   }

@@ -1,15 +1,124 @@
 <template>
   <div>
-    分类
+    <scroll class="scroll">
+      <li>李若男1</li>
+      <li>李若男2</li>
+      <li>李若男3</li>
+      <li>李若男4</li>
+      <li>李若男5</li>
+      <li>李若男6</li>
+      <li>李若男7</li>
+      <li>李若男8</li>
+      <li>李若男9</li>
+      <li>李若男10</li>
+      <li>李若男11</li>
+      <li>李若男12</li>
+      <li>李若男13</li>
+      <li>李若男14</li>
+      <li>李若男15</li>
+      <li>李若男16</li>
+      <li>李若男17</li>
+      <li>李若男18</li>
+      <li>李若男19</li>
+      <li>李若男20</li>
+      <li>李若男21</li>
+      <li>李若男22</li>
+      <li>李若男23</li>
+      <li>李若男24</li>
+      <li>李若男25</li>
+      <li>李若男26</li>
+      <li>李若男27</li>
+      <li>李若男28</li>
+      <li>李若男29</li>
+      <li>李若男30</li>
+      <li>李若男31</li>
+      <li>李若男32</li>
+      <li>李若男33</li>
+      <li>李若男34</li>
+      <li>李若男35</li>
+      <li>李若男36</li>
+      <li>李若男37</li>
+      <li>李若男38</li>
+      <li>李若男39</li>
+      <li>李若男40</li>
+      <li>李若男41</li>
+      <li>李若男42</li>
+      <li>李若男43</li>
+      <li>李若男44</li>
+      <li>李若男45</li>
+      <li>李若男46</li>
+      <li>李若男47</li>
+      <li>李若男48</li>
+      <li>李若男49</li>
+      <li>李若男50</li>
+      <li>李若男51</li>
+      <li>李若男52</li>
+      <li>李若男53</li>
+      <li>李若男54</li>
+      <li>李若男55</li>
+      <li>李若男56</li>
+      <li>李若男57</li>
+      <li>李若男58</li>
+      <li>李若男59</li>
+      <li>李若男60</li>
+      <li>李若男61</li>
+      <li>李若男62</li>
+      <li>李若男63</li>
+      <li>李若男64</li>
+      <li>李若男65</li>
+      <li>李若男66</li>
+      <li>李若男67</li>
+      <li>李若男68</li>
+      <li>李若男69</li>
+      <li>李若男70</li>
+      <li>李若男71</li>
+      <li>李若男72</li>
+      <li>李若男73</li>
+      <li>李若男74</li>
+      <li>李若男75</li>
+      <li>李若男76</li>
+      <li>李若男77</li>
+      <li>李若男78</li>
+      <li>李若男79</li>
+      <li>李若男80</li>
+      <li>李若男81</li>
+      <li>李若男82</li>
+      <li>李若男83</li>
+      <li>李若男84</li>
+      <li>李若男85</li>
+      <li>李若男86</li>
+      <li>李若男87</li>
+      <li>李若男88</li>
+      <li>李若男89</li>
+      <li>李若男90</li>
+      <li>李若男91</li>
+      <li>李若男92</li>
+      <li>李若男93</li>
+      <li>李若男94</li>
+      <li>李若男95</li>
+      <li>李若男96</li>
+      <li>李若男97</li>
+      <li>李若男98</li>
+      <li>李若男99</li>
+      <li>李若男100</li>
+    </scroll>
   </div>
 </template>
 
 <script>
+  import Scroll from "components/common/scroll/Scroll";
+
   export default {
-    name: "category"
+    name: "category",
+    components: {
+      Scroll
+    }
   }
 </script>
 
 <style scoped>
-
+  .scroll{
+    height: 500px;
+    overflow: hidden;
+  }
 </style>

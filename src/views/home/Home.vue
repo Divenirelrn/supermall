@@ -3,73 +3,13 @@
     <nav-bar>
       <span slot="middle">购物街</span>
     </nav-bar>
-    <rotation :img-list="banners"/>
-    <recommends :recommends="recommends"/>
-    <feature-view/>
-    <tab-control @itemClick="itemClick"/>
-    <goods-list :goods="goods[currentType].list"/>
-    <ul>
-      <li>李若男1</li>
-      <li>李若男2</li>
-      <li>李若男3</li>
-      <li>李若男4</li>
-      <li>李若男5</li>
-      <li>李若男6</li>
-      <li>李若男7</li>
-      <li>李若男8</li>
-      <li>李若男9</li>
-      <li>李若男10</li>
-      <li>李若男11</li>
-      <li>李若男12</li>
-      <li>李若男13</li>
-      <li>李若男14</li>
-      <li>李若男15</li>
-      <li>李若男16</li>
-      <li>李若男17</li>
-      <li>李若男18</li>
-      <li>李若男19</li>
-      <li>李若男20</li>
-      <li>李若男1</li>
-      <li>李若男2</li>
-      <li>李若男3</li>
-      <li>李若男4</li>
-      <li>李若男5</li>
-      <li>李若男6</li>
-      <li>李若男7</li>
-      <li>李若男8</li>
-      <li>李若男9</li>
-      <li>李若男10</li>
-      <li>李若男11</li>
-      <li>李若男12</li>
-      <li>李若男13</li>
-      <li>李若男14</li>
-      <li>李若男15</li>
-      <li>李若男16</li>
-      <li>李若男17</li>
-      <li>李若男18</li>
-      <li>李若男19</li>
-      <li>李若男20</li>
-      <li>李若男1</li>
-      <li>李若男2</li>
-      <li>李若男3</li>
-      <li>李若男4</li>
-      <li>李若男5</li>
-      <li>李若男6</li>
-      <li>李若男7</li>
-      <li>李若男8</li>
-      <li>李若男9</li>
-      <li>李若男10</li>
-      <li>李若男11</li>
-      <li>李若男12</li>
-      <li>李若男13</li>
-      <li>李若男14</li>
-      <li>李若男15</li>
-      <li>李若男16</li>
-      <li>李若男17</li>
-      <li>李若男18</li>
-      <li>李若男19</li>
-      <li>李若男20</li>
-    </ul>
+    <scroll class="scroll" ref="scroll">
+      <rotation :img-list="banners" @rotationImgLoad="imgLoad"/>
+      <recommends :recommends="recommends"/>
+      <feature-view/>
+      <tab-control @itemClick="itemClick"/>
+      <goods-list :goods="goods[currentType].list" @goodsLoad="imgLoad"/>
+    </scroll>
   </div>
 </template>
 
@@ -77,13 +17,13 @@
   import {getHomeMultidata, getHomeGoods} from "network/home";
 
   import Rotation from "components/common/rotation/Rotation";
+  import Scroll from "components/common/scroll/Scroll";
   import NavBar from "components/content/navbar/NavBar";
   import TabControl from "components/content/tabcontrol/TabControl";
   import GoodsList from "components/content/goodsList/GoodsList";
 
   import Recommends from "./Recommends";
   import FeatureView from "./FeatureView";
-
 
   export default {
     name: "Home",
@@ -105,13 +45,17 @@
       Recommends,
       FeatureView,
       TabControl,
-      GoodsList
+      GoodsList,
+      Scroll
     },
     created() {
       this.getHomeMultidata();
       this.getHomeGoods('pop');
       this.getHomeGoods('new');
       this.getHomeGoods('sell');
+      this.$bus.$on('goodsImgLoad', () => {
+        this.$refs.scroll.scroll.refresh();
+      });
     },
     methods: {
       /**
@@ -129,6 +73,9 @@
             this.currentType = 'sell';
             break;
         }
+      },
+      imgLoad(){
+        this.$refs.scroll.scroll.refresh();
       },
       /**
        * 网络请求相关方法
@@ -153,5 +100,9 @@
 <style scoped>
   .home{
     padding-top: 44px;
+  }
+  .scroll{
+    height: calc(100vh - 49px - 44px);
+    overflow: hidden;
   }
 </style>
