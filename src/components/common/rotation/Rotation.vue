@@ -109,8 +109,8 @@
     transform: translate(-50%, 0);
   }
   .pointer{
-    width: 14px;
-    height: 14px;
+    width: 10px;
+    height: 10px;
     background-color: #fff;
     border-radius: 50%;
     margin-right: 10px;

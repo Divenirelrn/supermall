@@ -4,6 +4,7 @@
       <span slot="middle">购物街</span>
     </nav-bar>
     <rotation :img-list="banners"></rotation>
+    <recommends :recommends="recommends"></recommends>
   </div>
 </template>
 
@@ -11,6 +12,7 @@
   import NavBar from "components/context/navbar/NavBar";
   import {getHomeMultidata} from "network/home";
   import Rotation from "components/common/rotation/Rotation";
+  import Recommends from "./Recommends";
 
   export default {
     name: "Home",
@@ -22,12 +24,14 @@
     },
     components: {
       NavBar,
-      Rotation
+      Rotation,
+      Recommends
     },
     created() {
       getHomeMultidata().then(res => {
+        console.log(res);
         this.banners = res.data.banner.list;
-        this.recommends = res.data.recommend;
+        this.recommends = res.data.recommend.list;
       })
     }
   }
