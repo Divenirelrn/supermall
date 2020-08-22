@@ -23,6 +23,7 @@
     methods: {
       textClick(index){
         this.currentIndex = index;
+        this.$emit('itemClick', index);
       }
     }
   }

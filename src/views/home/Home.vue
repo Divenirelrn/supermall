@@ -6,7 +6,8 @@
     <rotation :img-list="banners"/>
     <recommends :recommends="recommends"/>
     <feature-view/>
-    <tab-control/>
+    <tab-control @itemClick="itemClick"/>
+    <goods-list :goods="goods[currentType].list"/>
     <ul>
       <li>李若男1</li>
       <li>李若男2</li>
@@ -73,11 +74,12 @@
 </template>
 
 <script>
-  import {getHomeMultidata} from "network/home";
+  import {getHomeMultidata, getHomeGoods} from "network/home";
 
   import Rotation from "components/common/rotation/Rotation";
-  import NavBar from "components/context/navbar/NavBar";
-  import TabControl from "components/context/tabcontrol/TabControl";
+  import NavBar from "components/content/navbar/NavBar";
+  import TabControl from "components/content/tabcontrol/TabControl";
+  import GoodsList from "components/content/goodsList/GoodsList";
 
   import Recommends from "./Recommends";
   import FeatureView from "./FeatureView";
@@ -88,7 +90,13 @@
     data(){
       return {
         banners: [],
-        recommends: []
+        recommends: [],
+        goods: {
+          'pop': {page: 0, list: []},
+          'new': {page: 0, list: []},
+          'sell': {page: 0, list: []}
+        },
+        currentType: 'pop'
       }
     },
     components: {
@@ -96,14 +104,48 @@
       Rotation,
       Recommends,
       FeatureView,
-      TabControl
+      TabControl,
+      GoodsList
     },
     created() {
-      getHomeMultidata().then(res => {
-        console.log(res);
-        this.banners = res.data.banner.list;
-        this.recommends = res.data.recommend.list;
-      })
+      this.getHomeMultidata();
+      this.getHomeGoods('pop');
+      this.getHomeGoods('new');
+      this.getHomeGoods('sell');
+    },
+    methods: {
+      /**
+      *事件相关方法
+      */
+      itemClick(index){
+        switch (index) {
+          case 0:
+            this.currentType = 'pop';
+            break;
+          case 1:
+            this.currentType = 'new';
+            break;
+          case 2:
+            this.currentType = 'sell';
+            break;
+        }
+      },
+      /**
+       * 网络请求相关方法
+       */
+      getHomeMultidata(){
+        getHomeMultidata().then(res => {
+          this.banners = res.data.banner.list;
+          this.recommends = res.data.recommend.list;
+        });
+      },
+      getHomeGoods(type){
+        const page = this.goods[type].page + 1;
+        getHomeGoods(type, page).then(res => {
+          this.goods[type].list.push(...res.data.list);
+        })
+        this.goods[type].page += 1;
+      }
     }
   }
 </script>
