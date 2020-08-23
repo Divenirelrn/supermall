@@ -20,7 +20,8 @@
       return {
         currentIndex: 0,
         leftPosition: 0,
-        timer: null
+        timer: null,
+        isLoad: false
       }
     },
     computed: {
@@ -86,7 +87,10 @@
         this.rotate();
       },
       imgLoad(){
-        this.$emit('rotationImgLoad');
+        if(!this.isLoad){
+          this.$emit('rotationImgLoad');
+          this.isLoad = true;
+        }
       }
     }
   }

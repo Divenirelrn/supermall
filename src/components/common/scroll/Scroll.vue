@@ -31,9 +31,19 @@
         this.$emit('getPosY', pos.y);
       });
       this.scroll.on('pullingUp', () => {
-        console.log('上拉加载更多');
-        this.scroll.finishPullUp();
+        this.$emit('pullingUp');
       });
+    },
+    methods: {
+      backTo(x, y, time=300){
+        this.scroll.scrollTo(x, y, time)
+      },
+      refresh(){
+        this.scroll.refresh();
+      },
+      finishPullUp(){
+        this.scroll.finishPullUp();
+      }
     }
   }
 </script>

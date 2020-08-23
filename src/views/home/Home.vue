@@ -3,18 +3,23 @@
     <nav-bar>
       <span slot="middle">购物街</span>
     </nav-bar>
-    <scroll class="scroll" ref="scroll" @getPosY="getPosY">
+    <scroll class="scroll"
+            ref="scroll"
+            @getPosY="getPosY"
+            @pullingUp="loadMore">
       <rotation :img-list="banners" @rotationImgLoad="imgLoad"/>
       <recommends :recommends="recommends"/>
       <feature-view/>
       <tab-control @itemClick="itemClick" ref="control"/>
       <goods-list :goods="goods[currentType].list"/>
     </scroll>
-    <back-top v-show="isShow"/>
+    <back-top v-show="isShow" @click.native="backTop"/>
   </div>
 </template>
 
 <script>
+  import {debounce} from "common/utils";
+
   import {getHomeMultidata, getHomeGoods} from "network/home";
 
   import Rotation from "components/common/rotation/Rotation";
@@ -58,8 +63,11 @@
       this.getHomeGoods('pop');
       this.getHomeGoods('new');
       this.getHomeGoods('sell');
+    },
+    mounted() {
+      const refresh = debounce(this.$refs.scroll.refresh, 300);
       this.$bus.$on('goodsImgLoad', () => {
-        this.$refs.scroll && this.$refs.scroll.scroll.refresh();
+        refresh();
       });
     },
     methods: {
@@ -80,14 +88,20 @@
         }
       },
       imgLoad(){
-        this.$refs.scroll.scroll.refresh();
+        this.$refs.scroll.refresh();
         this.offsetTop = this.$refs.control.$el.offsetTop;
+      },
+      loadMore(){
+        this.getHomeGoods(this.currentType);
       },
       /**
        * BackTop控制相关方法
        */
       getPosY(posY){
         this.isShow = -posY >= this.offsetTop - 44;
+      },
+      backTop(){
+        this.$refs.scroll.backTo(0, 0, 10);
       },
       /**
        * 网络请求相关方法
@@ -104,6 +118,7 @@
           this.goods[type].list.push(...res.data.list);
         })
         this.goods[type].page += 1;
+        this.$refs.scroll && this.$refs.scroll.finishPullUp();
       }
     }
   }
