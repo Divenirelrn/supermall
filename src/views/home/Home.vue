@@ -102,14 +102,14 @@
         }
         this.$refs.control.currentIndex = index;
         this.$refs.control2.currentIndex = index;
-        // this.$refs.scroll.backTo(0, this.goods[this.currentType].topY, 1);
+        this.$refs.scroll.backTo(0, this.goods[this.currentType].topY, 1);
       },
       imgLoad(){
         this.$refs.scroll.refresh();
         this.offsetTop = this.$refs.control.$el.offsetTop;
-        // this.goods.pop.topY = -this.offsetTop + 45;
-        // this.goods.new.topY = -this.offsetTop + 45;
-        // this.goods.sell.topY = -this.offsetTop + 45;
+        this.goods.pop.topY = -this.offsetTop + 45;
+        this.goods.new.topY = -this.offsetTop + 45;
+        this.goods.sell.topY = -this.offsetTop + 45;
       },
       loadMore(){
         this.getHomeGoods(this.currentType);
@@ -131,7 +131,9 @@
        */
       getHomeMultidata(){
         getHomeMultidata().then(res => {
-          this.banners = res.data.banner.list;
+          for (let item of res.data.banner.list){
+            this.banners.push(item.image);
+          }
           this.recommends = res.data.recommend.list;
         });
       },

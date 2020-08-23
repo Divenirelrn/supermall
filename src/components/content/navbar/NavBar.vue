@@ -19,7 +19,7 @@
   .nav-bar{
     height: 44px;
     line-height: 44px;
-    /*background-color: var(--color-tint);*/
+    background-color: #fff;
     display: flex;
     text-align: center;
     color: #fff;

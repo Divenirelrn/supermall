@@ -1,8 +1,8 @@
 <template>
   <div class="rotation">
     <div class="img-list" :style="{marginLeft: leftPosition}">
-      <img v-for="item in imgList" :src="item.image" @load="imgLoad">
-      <img :src="imgList[0] && imgList[0].image">
+      <img v-for="item in imgList" :src="item" @load="imgLoad">
+      <img :src="imgList[0]">
     </div>
     <div class="pointer-wrapper">
       <div class="pointer"
@@ -38,7 +38,7 @@
       isActive(){
         return function(index) {
           let tmpPosition = -parseInt(this.leftPosition);
-          if(tmpPosition === 4 * document.body.clientWidth){
+          if(tmpPosition === this.imgList.length * document.body.clientWidth){
             tmpPosition = 0;
           }
           return tmpPosition === index * document.body.clientWidth;
@@ -107,6 +107,7 @@
   .img-list img{
     /*height: 195px;*/
     width: 100vw;
+    height: auto;
   }
   .pointer-wrapper{
     display: flex;

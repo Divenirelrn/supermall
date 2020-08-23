@@ -13,28 +13,33 @@
         </li>
       </ul>
     </nav-bar>
+    <rotation :imgList="topImages" class="rotation"/>
   </div>
 </template>
 
 <script>
   import {getDetailInfo} from "network/detail";
+  import Rotation from "components/common/rotation/Rotation";
 
   import NavBar from "../navbar/NavBar";
 
   export default {
     name: "Detail",
     components: {
-      NavBar
+      NavBar,
+      Rotation
     },
     data(){
       return {
         navTitles: ['商品', '参数', '评论', '推荐'],
-        currentIndex: 0
+        currentIndex: 0,
+        topImages: []
       }
     },
     created(){
       getDetailInfo(this.$route.query.iid).then(res => {
         console.log(res);
+        this.topImages.push(...res.result.itemInfo.topImages);
       })
     },
     methods: {
@@ -49,6 +54,9 @@
 </script>
 
 <style scoped>
+  .detail{
+    padding-top: 44px;
+  }
   .nav-title-wrapper{
     display: flex;
     list-style: none;
@@ -63,5 +71,9 @@
   }
   .active{
     color: var(--color-high-text);
+  }
+  .rotation{
+    height: 300px;
+    overflow: hidden;
   }
 </style>
