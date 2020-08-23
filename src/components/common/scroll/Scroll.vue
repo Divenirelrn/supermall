@@ -16,7 +16,8 @@
     name: "Scroll",
     data(){
       return {
-        scroll: null
+        scroll: null,
+        posY: 0
       }
     },
     mounted(){
@@ -26,7 +27,8 @@
         pullUpLoad: true
       });
       this.scroll.on('scroll', pos => {
-        // console.log(pos);
+        this.posY = pos.y;
+        this.$emit('getPosY', pos.y);
       });
       this.scroll.on('pullingUp', () => {
         console.log('上拉加载更多');

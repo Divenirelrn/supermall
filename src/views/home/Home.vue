@@ -3,13 +3,14 @@
     <nav-bar>
       <span slot="middle">购物街</span>
     </nav-bar>
-    <scroll class="scroll" ref="scroll">
+    <scroll class="scroll" ref="scroll" @getPosY="getPosY">
       <rotation :img-list="banners" @rotationImgLoad="imgLoad"/>
       <recommends :recommends="recommends"/>
       <feature-view/>
-      <tab-control @itemClick="itemClick"/>
-      <goods-list :goods="goods[currentType].list" @goodsLoad="imgLoad"/>
+      <tab-control @itemClick="itemClick" ref="control"/>
+      <goods-list :goods="goods[currentType].list"/>
     </scroll>
+    <back-top v-show="isShow"/>
   </div>
 </template>
 
@@ -21,6 +22,7 @@
   import NavBar from "components/content/navbar/NavBar";
   import TabControl from "components/content/tabcontrol/TabControl";
   import GoodsList from "components/content/goodsList/GoodsList";
+  import BackTop from "components/content/backTop/BackTop";
 
   import Recommends from "./Recommends";
   import FeatureView from "./FeatureView";
@@ -36,7 +38,9 @@
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []}
         },
-        currentType: 'pop'
+        currentType: 'pop',
+        isShow: false,
+        posY: 0
       }
     },
     components: {
@@ -46,7 +50,8 @@
       FeatureView,
       TabControl,
       GoodsList,
-      Scroll
+      Scroll,
+      BackTop
     },
     created() {
       this.getHomeMultidata();
@@ -54,7 +59,7 @@
       this.getHomeGoods('new');
       this.getHomeGoods('sell');
       this.$bus.$on('goodsImgLoad', () => {
-        this.$refs.scroll.scroll.refresh();
+        this.$refs.scroll && this.$refs.scroll.scroll.refresh();
       });
     },
     methods: {
@@ -76,6 +81,13 @@
       },
       imgLoad(){
         this.$refs.scroll.scroll.refresh();
+        this.offsetTop = this.$refs.control.$el.offsetTop;
+      },
+      /**
+       * BackTop控制相关方法
+       */
+      getPosY(posY){
+        this.isShow = -posY >= this.offsetTop - 44;
       },
       /**
        * 网络请求相关方法
