@@ -43,9 +43,9 @@
         banners: [],
         recommends: [],
         goods: {
-          'pop': {page: 0, list: []},
-          'new': {page: 0, list: []},
-          'sell': {page: 0, list: []}
+          'pop': {page: 0, list: [], topY: 0},
+          'new': {page: 0, list: [], topY: 0},
+          'sell': {page: 0, list: [], topY: 0}
         },
         currentType: 'pop',
         isShow: false,
@@ -93,10 +93,14 @@
         }
         this.$refs.control.currentIndex = index;
         this.$refs.control2.currentIndex = index;
+        this.$refs.scroll.backTo(0, this.goods[this.currentType].topY, 1);
       },
       imgLoad(){
         this.$refs.scroll.refresh();
         this.offsetTop = this.$refs.control.$el.offsetTop;
+        this.goods.pop.topY = -this.offsetTop + 45;
+        this.goods.new.topY = -this.offsetTop + 45;
+        this.goods.sell.topY = -this.offsetTop + 45;
       },
       loadMore(){
         this.getHomeGoods(this.currentType);
@@ -107,6 +111,8 @@
       getPosY(posY){
         this.isShow = -posY >= this.offsetTop - 44;
         this.isControlShow = -posY >= this.offsetTop - 44;
+        this.goods[this.currentType].topY = posY;
+        // console.log(this.goods[this.currentType]);
       },
       backTop(){
         this.$refs.scroll.backTo(0, 0, 10);
