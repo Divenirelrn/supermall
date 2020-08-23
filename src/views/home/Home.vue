@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <nav-bar>
+    <nav-bar back-color="#ff8198">
       <span slot="middle">购物街</span>
     </nav-bar>
     <tab-control @itemClick="itemClick"
@@ -74,6 +74,15 @@
       this.$bus.$on('goodsImgLoad', () => {
         refresh();
       });
+      this.$bus.$on('goodsItemClick', iid => {
+        console.log(iid);
+        this.$router.push({
+          path: '/detail',
+          query: {
+            iid
+          }
+        });
+      });
     },
     methods: {
       /**
@@ -93,14 +102,14 @@
         }
         this.$refs.control.currentIndex = index;
         this.$refs.control2.currentIndex = index;
-        this.$refs.scroll.backTo(0, this.goods[this.currentType].topY, 1);
+        // this.$refs.scroll.backTo(0, this.goods[this.currentType].topY, 1);
       },
       imgLoad(){
         this.$refs.scroll.refresh();
         this.offsetTop = this.$refs.control.$el.offsetTop;
-        this.goods.pop.topY = -this.offsetTop + 45;
-        this.goods.new.topY = -this.offsetTop + 45;
-        this.goods.sell.topY = -this.offsetTop + 45;
+        // this.goods.pop.topY = -this.offsetTop + 45;
+        // this.goods.new.topY = -this.offsetTop + 45;
+        // this.goods.sell.topY = -this.offsetTop + 45;
       },
       loadMore(){
         this.getHomeGoods(this.currentType);
