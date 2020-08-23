@@ -3,6 +3,10 @@
     <nav-bar>
       <span slot="middle">购物街</span>
     </nav-bar>
+    <tab-control @itemClick="itemClick"
+                 class="control2"
+                 ref="control2"
+                 v-show="isControlShow"/>
     <scroll class="scroll"
             ref="scroll"
             @getPosY="getPosY"
@@ -45,7 +49,8 @@
         },
         currentType: 'pop',
         isShow: false,
-        posY: 0
+        posY: 0,
+        isControlShow: false
       }
     },
     components: {
@@ -86,6 +91,8 @@
             this.currentType = 'sell';
             break;
         }
+        this.$refs.control.currentIndex = index;
+        this.$refs.control2.currentIndex = index;
       },
       imgLoad(){
         this.$refs.scroll.refresh();
@@ -99,6 +106,7 @@
        */
       getPosY(posY){
         this.isShow = -posY >= this.offsetTop - 44;
+        this.isControlShow = -posY >= this.offsetTop - 44;
       },
       backTop(){
         this.$refs.scroll.backTo(0, 0, 10);
@@ -131,5 +139,12 @@
   .scroll{
     height: calc(100vh - 49px - 44px);
     overflow: hidden;
+  }
+  .control2{
+    position: fixed;
+    top: 43px;
+    left: 0;
+    right: 0;
+    z-index: 99;
   }
 </style>
